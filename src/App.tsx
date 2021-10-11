@@ -25,6 +25,29 @@ import '@ionic/react/css/display.css'
 
 /* Theme variables */
 import './theme/variables.css'
+import { MeetupDetailPage } from './pages/meetups/meetup-detail/MeetupDetailPage'
+import { Meetup } from './services/models/Meetup'
+
+const testMeetup: Meetup = {
+    id: 'HELLO',
+    name: 'Small gathering',
+    startDate: new Date(),
+    endDate: new Date(),
+    location: {
+        friendlyName: 'Roots',
+        address: 'Cluj-Napoca',
+        geoCoordinates: {
+            longitude: 0,
+            latitude: 0,
+        },
+    },
+    organizer: {
+        id: 'test',
+        firstName: 'Fineas',
+        lastName: 'Gavre',
+    },
+    attendances: [],
+}
 
 const App: React.FC = () => (
     <IonApp>
@@ -32,7 +55,7 @@ const App: React.FC = () => (
             <IonTabs>
                 <IonRouterOutlet>
                     <Route exact path="/tab1">
-                        <Tab1 />
+                        <MeetupDetailPage meetup={testMeetup} />
                     </Route>
                     <Route exact path="/tab2">
                         <Tab2 />
