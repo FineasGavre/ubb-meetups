@@ -1,0 +1,8 @@
+{
+  "name": "UBB Meetups",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react",
+  "id": "79e204d5"
+}

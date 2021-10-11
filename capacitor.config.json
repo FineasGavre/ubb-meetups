@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "UBB Meetups",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
