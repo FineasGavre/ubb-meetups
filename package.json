@@ -65,7 +65,8 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "3.2.4"
+    "@capacitor/cli": "3.2.4",
+    "prettier": "^2.4.1"
   },
   "description": "An Ionic project"
 }
