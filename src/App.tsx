@@ -1,8 +1,6 @@
 import { Redirect, Route } from 'react-router-dom'
 import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
-import { ellipse, square, triangle } from 'ionicons/icons'
-import Tab1 from './pages/Tab1'
 import Tab2 from './pages/Tab2'
 import Tab3 from './pages/Tab3'
 import { ServerSideNotificationToastProvider } from './components/providers/ServerSideNotificationToastProvider'
@@ -27,6 +25,11 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 import { MeetupDetailPage } from './pages/meetups/meetup-detail/MeetupDetailPage'
 import { Meetup } from './services/models/Meetup'
+import { TabBar } from './components/navigation/TabBar'
+import { ellipse, square, triangle } from 'ionicons/icons'
+import { MeetupListPage } from './pages/meetups/meetup-list/MeetupListPage'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { AxiosProvider } from './components/providers/AxiosProvider'
 
 const testMeetup: Meetup = {
     id: 'HELLO',
@@ -49,42 +52,49 @@ const testMeetup: Meetup = {
     attendances: [],
 }
 
+const queryClient = new QueryClient()
+
 const App: React.FC = () => (
-    <IonApp>
-        <IonReactRouter>
-            <IonTabs>
-                <IonRouterOutlet>
-                    <Route exact path="/tab1">
-                        <MeetupDetailPage meetup={testMeetup} />
-                    </Route>
-                    <Route exact path="/tab2">
-                        <Tab2 />
-                    </Route>
-                    <Route path="/tab3">
-                        <Tab3 />
-                    </Route>
-                    <Route exact path="/">
-                        <Redirect to="/tab1" />
-                    </Route>
-                </IonRouterOutlet>
-                <IonTabBar slot="bottom">
-                    <IonTabButton tab="tab1" href="/tab1">
-                        <IonIcon icon={triangle} />
-                        <IonLabel>Tab 1</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="tab2" href="/tab2">
-                        <IonIcon icon={ellipse} />
-                        <IonLabel>Tab 2</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="tab3" href="/tab3">
-                        <IonIcon icon={square} />
-                        <IonLabel>Tab 3</IonLabel>
-                    </IonTabButton>
-                </IonTabBar>
-            </IonTabs>
-        </IonReactRouter>
-        <ServerSideNotificationToastProvider />
-    </IonApp>
+    <AxiosProvider>
+        <QueryClientProvider client={queryClient}>
+            <IonApp>
+                <IonReactRouter>
+                    <IonTabs>
+                        <IonRouterOutlet>
+                            <Route path="/meetups">
+                                <Route exact path="/meetups" component={MeetupListPage} />
+                                <Route exact path="/meetups/:meetupId" component={MeetupDetailPage} />
+                            </Route>
+                            <Route exact path="/tab2">
+                                <Tab2 />
+                            </Route>
+                            <Route path="/tab3">
+                                <Tab3 />
+                            </Route>
+                            <Route exact path="/">
+                                <Redirect to="/meetups" />
+                            </Route>
+                        </IonRouterOutlet>
+                        <IonTabBar slot="bottom">
+                            <IonTabButton tab="meetups" href="/meetups">
+                                <IonIcon icon={triangle} />
+                                <IonLabel>Meetups</IonLabel>
+                            </IonTabButton>
+                            <IonTabButton tab="tab2" href="/tab2">
+                                <IonIcon icon={ellipse} />
+                                <IonLabel>My Meetups</IonLabel>
+                            </IonTabButton>
+                            <IonTabButton tab="tab3" href="/tab3">
+                                <IonIcon icon={square} />
+                                <IonLabel>My Account</IonLabel>
+                            </IonTabButton>
+                        </IonTabBar>
+                    </IonTabs>
+                </IonReactRouter>
+                <ServerSideNotificationToastProvider />
+            </IonApp>
+        </QueryClientProvider>
+    </AxiosProvider>
 )
 
 export default App
