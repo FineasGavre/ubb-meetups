@@ -19,12 +19,12 @@ interface MeetupLocation {
     }
 }
 
-interface MeetupUserAttendance {
+export interface MeetupUserAttendance {
     attendee: User
     state: AttendanceState
 }
 
-enum AttendanceState {
+export enum AttendanceState {
     DECLINED,
     TENTATIVE,
     ACCEPTED,

@@ -7,7 +7,7 @@ interface AxiosProviderProps {
 
 export function AxiosProvider({ children }: AxiosProviderProps) {
     useEffect(() => {
-        axios.defaults.baseURL = 'http://localhost:3000'
+        axios.defaults.baseURL = 'http://localhost:3030'
     }, [])
 
     return <>{children}</>

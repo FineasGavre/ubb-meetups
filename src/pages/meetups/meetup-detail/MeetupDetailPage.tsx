@@ -13,10 +13,11 @@ import {
     IonPage,
     IonText,
     IonTitle,
-    IonToolbar,
+    IonToolbar
 } from '@ionic/react'
 import { RouteComponentProps } from 'react-router'
 import { useMeetup } from '../../../components/hooks/data-access/queries/useMeetup'
+import { AttendanceState, MeetupUserAttendance } from '../../../services/models/Meetup'
 
 interface MeetupDetailPageRouteParams {
     meetupId: string
@@ -52,40 +53,49 @@ export function MeetupDetailPage(props: MeetupDetailPageProps) {
                     </IonCardHeader>
                     <IonCardContent>
                         <IonList inset={false} lines="none">
-                            <IonItem>
-                                <IonLabel>Fineas Gavre</IonLabel>
-                                <IonChip color="success">
-                                    <IonLabel>Confirmed</IonLabel>
-                                </IonChip>
-                            </IonItem>
-                            <IonItem>
-                                <IonLabel>Carina Ghiorghita</IonLabel>
-                                <IonChip color="success">
-                                    <IonLabel>Confirmed</IonLabel>
-                                </IonChip>
-                            </IonItem>
-                            <IonItem>
-                                <IonLabel>Cristian Gherman</IonLabel>
-                                <IonChip color="success">
-                                    <IonLabel>Confirmed</IonLabel>
-                                </IonChip>
-                            </IonItem>
-                            <IonItem>
-                                <IonLabel>Andrei Foidas</IonLabel>
-                                <IonChip color="success">
-                                    <IonLabel>Confirmed</IonLabel>
-                                </IonChip>
-                            </IonItem>
-                            <IonItem>
-                                <IonLabel>Andrei Doreata</IonLabel>
-                                <IonChip color="danger">
-                                    <IonLabel>Declined</IonLabel>
-                                </IonChip>
-                            </IonItem>
+                            {
+                                meetup?.attendances.map(attendance => (
+                                    <AttendanceRow userAttendance={attendance} />
+                                ))
+                            }
                         </IonList>
                     </IonCardContent>
                 </IonCard>
             </IonContent>
         </IonPage>
+    )
+}
+
+interface AttendanceRowProps {
+    userAttendance: MeetupUserAttendance
+}
+
+function AttendanceRow({ userAttendance }: AttendanceRowProps) {
+    const stateMap = {
+        [AttendanceState.DECLINED]: {
+            title: 'Declined',
+            color: 'danger'
+        },
+        [AttendanceState.TENTATIVE]: {
+            title: 'Tentative',
+            color: 'warning'
+        },
+        [AttendanceState.ACCEPTED]: {
+            title: 'Accepted',
+            color: 'success'
+        },
+        [AttendanceState.CHECKED_IN]: {
+            title: 'Checked In',
+            color: 'success'
+        }
+    }
+
+    return (
+        <IonItem>
+            <IonLabel>{ userAttendance.attendee.firstName + ' ' + userAttendance.attendee.lastName }</IonLabel>
+            <IonChip color={stateMap[userAttendance.state].color}>
+                <IonLabel>{ stateMap[userAttendance.state].title }</IonLabel>
+            </IonChip>
+        </IonItem>
     )
 }
