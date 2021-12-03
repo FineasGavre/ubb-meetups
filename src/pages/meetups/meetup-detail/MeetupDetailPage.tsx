@@ -1,4 +1,6 @@
 import {
+    IonBackButton,
+    IonButtons,
     IonCard,
     IonCardContent,
     IonCardHeader,
@@ -18,6 +20,8 @@ import {
 import { RouteComponentProps } from 'react-router'
 import { useMeetup } from '../../../components/hooks/data-access/queries/useMeetup'
 import { AttendanceState, MeetupUserAttendance } from '../../../services/models/Meetup'
+import { useAppSelector } from '../../../components/hooks/state-access/useAppSelector'
+import { useEffect } from 'react'
 
 interface MeetupDetailPageRouteParams {
     meetupId: string
@@ -26,12 +30,15 @@ interface MeetupDetailPageRouteParams {
 interface MeetupDetailPageProps extends RouteComponentProps<MeetupDetailPageRouteParams> {}
 
 export function MeetupDetailPage(props: MeetupDetailPageProps) {
-    const { data: meetup } = useMeetup(props.match.params.meetupId)
+    const meetup = useAppSelector(state => state.meetups.meetups.find(meetup => meetup.id === props.match.params.meetupId))
 
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
+                    <IonButtons slot="start">
+                        <IonBackButton />
+                    </IonButtons>
                     <IonTitle>{meetup?.name}</IonTitle>
                 </IonToolbar>
             </IonHeader>
@@ -55,7 +62,7 @@ export function MeetupDetailPage(props: MeetupDetailPageProps) {
                         <IonList inset={false} lines="none">
                             {
                                 meetup?.attendances.map(attendance => (
-                                    <AttendanceRow userAttendance={attendance} />
+                                    <AttendanceRow userAttendance={attendance} key={attendance.attendee.id} />
                                 ))
                             }
                         </IonList>

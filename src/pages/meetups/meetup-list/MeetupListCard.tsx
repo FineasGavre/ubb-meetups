@@ -7,7 +7,7 @@ interface MeetupListCardProps {
 
 export function MeetupListCard({ meetup }: MeetupListCardProps) {
     return (
-        <IonCard button href={`/meetups/${meetup.id}`}>
+        <IonCard button routerLink={`/meetups/${meetup.id}`}>
             <IonCardHeader>
                 <IonCardTitle>{meetup.name}</IonCardTitle>
             </IonCardHeader>

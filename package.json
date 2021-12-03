@@ -11,6 +11,7 @@
     "@capacitor/status-bar": "1.0.3",
     "@ionic/react": "^5.5.0",
     "@ionic/react-router": "^5.5.0",
+    "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
@@ -26,6 +27,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-query": "^3.26.0",
+    "react-redux": "^7.2.6",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
@@ -71,7 +73,8 @@
   "devDependencies": {
     "@capacitor/cli": "3.2.4",
     "@types/object-hash": "^2.2.1",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "redux-devtools": "^3.7.0"
   },
   "description": "An Ionic project"
 }
