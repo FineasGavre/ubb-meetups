@@ -1,6 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+interface AuthenticationRequest {
+    email: string
+    password: string
+}
+
 interface AuthenticationResponse {
     access_token: string
 }
@@ -17,7 +22,7 @@ const initialState: AuthenticationState = {
 
 export const authenticate = createAsyncThunk(
     'authentication/authenticate',
-    async (payload): Promise<AuthenticationResponse> => {
-        return (await axios.post('/auth/login', payload)).data as AuthenticationResponse
+    async (payload: AuthenticationRequest): Promise<AuthenticationResponse> => {
+        return (await axios.post<AuthenticationRequest, AuthenticationResponse>('/auth/login', payload)) as AuthenticationResponse
     }
 )
