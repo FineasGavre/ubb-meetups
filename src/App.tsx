@@ -1,7 +1,4 @@
-import { Redirect, Route } from 'react-router-dom'
-import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react'
-import { IonReactRouter } from '@ionic/react-router'
-import { ServerSideNotificationToastProvider } from './components/providers/ServerSideNotificationToastProvider'
+import { IonApp } from '@ionic/react'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
@@ -28,6 +25,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { AxiosProvider } from './components/providers/AxiosProvider'
 import { Provider } from 'react-redux'
 import { store } from './store'
+import { AppRouter } from './components/router/AppRouter'
 
 const queryClient = new QueryClient()
 
@@ -36,34 +34,7 @@ const App: React.FC = () => (
         <QueryClientProvider client={queryClient}>
             <Provider store={store}>
                 <IonApp>
-                    <IonReactRouter>
-                        <IonTabs>
-                            <IonRouterOutlet>
-                                <Route path="/meetups">
-                                    <Route exact path="/meetups" component={MeetupListPage} />
-                                    <Route exact path="/meetups/:meetupId" component={MeetupDetailPage} />
-                                </Route>
-                                <Route exact path="/">
-                                    <Redirect to="/meetups" />
-                                </Route>
-                            </IonRouterOutlet>
-                            <IonTabBar slot="bottom">
-                                <IonTabButton tab="meetups" href="/meetups">
-                                    <IonIcon icon={triangle} />
-                                    <IonLabel>Meetups</IonLabel>
-                                </IonTabButton>
-                                <IonTabButton tab="tab2" href="/tab2">
-                                    <IonIcon icon={ellipse} />
-                                    <IonLabel>My Meetups</IonLabel>
-                                </IonTabButton>
-                                <IonTabButton tab="tab3" href="/tab3">
-                                    <IonIcon icon={square} />
-                                    <IonLabel>My Account</IonLabel>
-                                </IonTabButton>
-                            </IonTabBar>
-                        </IonTabs>
-                    </IonReactRouter>
-                    <ServerSideNotificationToastProvider />
+                    <AppRouter />
                 </IonApp>
             </Provider>
         </QueryClientProvider>
